@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# This script is used to add modules to kernel with 'git subtree' command.
+#
+# Usage example:
+#	./fetch_modules.sh -m default.xml
+#
+# This script is specified to use manifest.xml from https://gitlab.hentaios.com/hentaios-gs-6.x/manifest.git.
+
 # Ensure the script stops on errors
 set -e
 
