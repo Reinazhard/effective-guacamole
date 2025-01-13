@@ -43,8 +43,12 @@ if [[ -z "${default_revision}" ]]; then
     exit 1
 fi
 
-# Define the default revision for helluva remote
-helluva_revision="refs/heads/Vallhound"
+# Extract the helluva revision
+helluva_revision=$(grep -oP '<remote.*name="helluva".*revision="\K[^"]+' "${manifest_file}")
+if [[ -z "${helluva_revision}" ]]; then
+    echo "Error: Helluva revision not found in the manifest."
+    exit 1
+fi
 
 echo "Default revision: ${default_revision}"
 echo "Helluva revision: ${helluva_revision}"
@@ -99,10 +103,10 @@ while IFS= read -r line; do
             revision="${default_revision}"
         fi
 
-	# Check if the module is in the list
-	if [[ ! "${modules[@]}" =~ "$(echo "${path}" | sed 's|^private/google-modules/||')" ]]; then
-		continue
-	fi
+        # Check if the module is in the list
+        if [[ ! "${modules[@]}" =~ "$(echo "${path}" | sed 's|^private/google-modules/||')" ]]; then
+            continue
+        fi
 
         # Determine the base URL based on the remote
         case "${remote}" in
@@ -121,8 +125,8 @@ while IFS= read -r line; do
         # Construct the repository URL
         repo_url="${base_url}/${name}"
 
-	# Modify path to google-modules
-	new_path=$(echo "${path}" | sed 's|^private/google-modules/|google-modules/|')
+        # Modify path to google-modules
+        new_path=$(echo "${path}" | sed 's|^private/google-modules/|google-modules/|')
 
         # Add the subtree
         echo "Adding subtree for ${name} into ${new_path} from ${repo_url} (revision: ${revision})..."
