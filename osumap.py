@@ -7,11 +7,29 @@ import asyncio
 import aiohttp
 import subprocess
 import logging
+import argparse
 from aiohttp import ClientTimeout
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+# Define the log format
+log_format = "%(levelname)s: %(message)s"
+
+# Parse command-line arguments
+parser = argparse.ArgumentParser(description="Generate and download osu! beatmap packs")
+parser.add_argument(
+    "-d",
+    "--debug",
+    action="store_true",
+    help="Enable higher level debugging with date and time",
 )
+args = parser.parse_args()
+
+# Set logging configuration based on debug argument
+if args.debug:
+    logging.basicConfig(
+        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+else:
+    logging.basicConfig(level=logging.INFO, format=log_format)
 
 
 async def detect_file_format(session, number):
