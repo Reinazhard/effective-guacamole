@@ -1,4 +1,4 @@
-# This script generates download URLs for osu! beatmap packs and optionally downloads them using aria2c.
+# This script fetches download URLs for osu! beatmap packs and optionally downloads them using aria2c.
 # It detects the appropriate file format (.zip or .7z) for each beatmap pack and writes the URLs to a file.
 # The user can choose to immediately start downloading the packs with aria2c or save the file for manual use later.
 # Make sure to install aiohttp python module.
@@ -14,7 +14,7 @@ from aiohttp import ClientTimeout
 log_format = "%(levelname)s: %(message)s"
 
 # Parse command-line arguments
-parser = argparse.ArgumentParser(description="Generate and download osu! beatmap packs")
+parser = argparse.ArgumentParser(description="Fetch and download osu! beatmap packs")
 parser.add_argument(
     "-d",
     "--debug",
@@ -109,9 +109,9 @@ def save_urls_to_file(urls, output_file):
     logging.info(f"URLs successfully saved to {output_file}.")
 
 
-def generate_and_download_osu_maps():
+def fetch_and_download_osu_maps():
     """
-    Main function to generate and optionally download osu! beatmap packs.
+    Main function to fetch and optionally download osu! beatmap packs.
     """
     try:
         start = int(input("Enter the starting beatmap pack number: ").strip())
@@ -150,4 +150,4 @@ def generate_and_download_osu_maps():
 
 # Run the script
 if __name__ == "__main__":
-    generate_and_download_osu_maps()
+    fetch_and_download_osu_maps()
